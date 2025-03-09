@@ -1,0 +1,18 @@
+networks:
+  vstream:
+    driver: bridge
+
+services:
+  vstream-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: ${NODE_ENV}
+    container_name: vstream-api
+    networks:
+      - vstream
+    volumes:
+      - .:/app
+    ports:
+      - "${PORT}:${PORT}"
+      - "9229:9229"
