@@ -8,7 +8,9 @@ export class AuthController {
   ) {}
 
   @Post('generate-simple-token')
-  generateSimpleToken(): string {
-    return this.createSimpleTokenService.execute();
+  generateSimpleToken(): { access_token: string } {
+    return {
+      access_token: this.createSimpleTokenService.execute(),
+    };
   }
 }
