@@ -1,0 +1,23 @@
+name: node-vstream CI
+
+on:
+  pull_request:
+    paths:
+      - '**.js'
+      - '**.ts'
+      - '**.json'
+      - '**.yml'
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Trigger EasyPanel deploy
+      run: |
+        curl -X POST ${{ secrets.DEPLOY_URL }}
