@@ -1,4 +1,4 @@
-name: node-vstream CI
+name: vstream-api CI
 
 on:
   pull_request:
