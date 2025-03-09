@@ -9,6 +9,14 @@ on:
       - '**.yml'
     branches: [ "main" ]
 
+  push:
+    paths:
+      - '**.js'
+      - '**.ts'
+      - '**.json'
+      - '**.yml'
+    branches: [ "main" ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
