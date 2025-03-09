@@ -17,7 +17,7 @@ RUN npm install
 CMD ["npm", "run", "start:dev"]
 
 # Development stage
-FROM node:20-alpine3.16 AS production
+FROM node:22-alpine3.20 AS production
 
 WORKDIR /app
 
