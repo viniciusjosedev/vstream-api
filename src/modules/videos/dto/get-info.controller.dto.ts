@@ -1,0 +1,23 @@
+import { ArrayMinSize, IsArray, IsEnum, IsNotEmpty } from 'class-validator';
+import { Transform } from 'class-transformer';
+
+enum ValidFields {
+  THUMBNAILS = 'thumbnails',
+  FORMATS = 'formats',
+  TITLE = 'title',
+  CHANNEL = 'channel',
+}
+
+export class GetInfoDTO {
+  @IsNotEmpty()
+  url: string;
+
+  @IsNotEmpty()
+  @IsArray()
+  @ArrayMinSize(1)
+  @Transform(({ value }) =>
+    typeof value === 'string' ? value.split(',') : value,
+  )
+  @IsEnum(ValidFields, { each: true })
+  fields: ValidFields[];
+}
