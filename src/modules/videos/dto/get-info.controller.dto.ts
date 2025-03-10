@@ -2,7 +2,7 @@ import { ArrayMinSize, IsArray, IsEnum, IsNotEmpty } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 enum ValidFields {
-  THUMBNAILS = 'thumbnails',
+  THUMBNAILS = 'thumbnail',
   FORMATS = 'formats',
   TITLE = 'title',
   CHANNEL = 'channel',

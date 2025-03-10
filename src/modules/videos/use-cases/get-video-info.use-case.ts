@@ -60,12 +60,11 @@ export class GetVideoInfo {
             data.channel = {
               channel_url: videoDetails.author.channel_url,
               name: videoDetails.author.name,
-              thumbnail:
-                videoDetails.thumbnails[videoDetails.thumbnails.length - 1],
+              photo_url: videoDetails.author.avatar,
             };
             break;
-          case 'thumbnails':
-            data.thumbnails =
+          case 'thumbnail':
+            data.thumbnail =
               videoDetails.thumbnails[videoDetails.thumbnails.length - 1];
             break;
           case 'formats':
