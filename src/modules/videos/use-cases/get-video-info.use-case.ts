@@ -1,10 +1,45 @@
 import { VideoService } from '../services/video.service';
 import {
+  FormatsFiltered,
   GetVideoInfoDTO,
   VideoInfoDTO,
 } from '../dto/get-video-info.use-case.dto';
 
 export class GetVideoInfo {
+  private getFirstNumbersInString(text: string) {
+    const numbers = text.match(/^\d+/);
+
+    return numbers ? numbers[0] : null;
+  }
+
+  private async getFormatsFiltered(url: string) {
+    const videoService = new VideoService();
+
+    const allowFormats = ['240', '360', '480', '720', '1080'];
+
+    const data: FormatsFiltered[] = [];
+
+    (await videoService.getFormats(url)).forEach((format) => {
+      if (
+        allowFormats.includes(
+          this.getFirstNumbersInString(format.qualityLabel || '') || 'null',
+        ) ||
+        (format.hasAudio && !format.hasVideo)
+      ) {
+        data.push({
+          hasVideo: format.hasVideo,
+          hasAudio: format.hasAudio,
+          qualityVideo: format.qualityLabel,
+          qualityAudio: format.quality,
+          format: format.mimeType?.split(';')[0] as string,
+          url: format.url,
+        });
+      }
+    });
+
+    return data;
+  }
+
   public async execute({
     url,
     fields,
@@ -34,7 +69,7 @@ export class GetVideoInfo {
               videoDetails.thumbnails[videoDetails.thumbnails.length - 1];
             break;
           case 'formats':
-            data.formats = await videoService.getFormats(url);
+            data.formats = await this.getFormatsFiltered(url);
         }
       }),
     );

@@ -5,6 +5,15 @@ export interface GetVideoInfoDTO {
   fields: Array<'thumbnails' | 'formats' | 'title' | 'channel'>;
 }
 
+export interface FormatsFiltered {
+  hasVideo: boolean;
+  hasAudio: boolean;
+  qualityVideo: string;
+  qualityAudio: string;
+  format: string;
+  url: string;
+}
+
 export interface VideoInfoDTO {
   title?: string;
   channel?: {
@@ -16,6 +25,6 @@ export interface VideoInfoDTO {
     name: string;
     channel_url: string;
   };
-  formats?: ytdl.videoFormat[];
+  formats?: FormatsFiltered[];
   thumbnails?: ytdl.thumbnail;
 }
