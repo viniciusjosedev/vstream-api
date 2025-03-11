@@ -1,5 +1,5 @@
 import { Controller, Post } from '@nestjs/common';
-import { CreateSimpleTokenService } from 'src/modules/auth/use-cases/create-simple-token.use-case';
+import { CreateSimpleTokenService } from '../use-cases/create-simple-token.use-case';
 
 @Controller()
 export class AuthController {

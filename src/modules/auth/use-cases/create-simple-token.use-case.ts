@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { AuthService } from '../services/auth.service';
 import { variablesEnv } from 'src/envs/variables.env';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class CreateSimpleTokenService {
