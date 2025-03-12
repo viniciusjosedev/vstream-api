@@ -4,10 +4,10 @@ import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class CreateSimpleTokenService {
-  public execute() {
-    const authService = new AuthService();
+  constructor(private readonly authService: AuthService) {}
 
-    return authService.generateToken({
+  public execute() {
+    return this.authService.generateToken({
       passphrase: variablesEnv.jwtPassphrase,
     });
   }
