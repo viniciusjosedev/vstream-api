@@ -37,7 +37,7 @@ describe('VideoController', () => {
     jest.clearAllMocks();
   });
 
-  it('should return token', async () => {
+  it('should return video infos', async () => {
     const getVideoInfoMock = {
       channel: {
         channel_url: 'url',
