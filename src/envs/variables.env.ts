@@ -4,5 +4,5 @@ export const variablesEnv = {
   jwtSecret: process.env.JWT_SECRET || 'secret',
   jwtExpires: process.env.JWT_EXPIRES || '30d',
   jwtPassphrase: process.env.JWT_PASSPHRASE,
-  cookies: process.env.COOKIES || '',
+  cookies: process.env.COOKIES || '[]',
 };
