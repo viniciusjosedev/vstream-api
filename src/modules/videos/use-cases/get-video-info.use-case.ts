@@ -4,7 +4,9 @@ import {
   GetVideoInfoDTO,
   VideoInfoDTO,
 } from '../dto/get-video-info.use-case.dto';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class GetVideoInfo {
   constructor(private readonly videoService: VideoService) {}
 

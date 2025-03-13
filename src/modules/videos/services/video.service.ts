@@ -1,6 +1,8 @@
 import * as ytdl from '@distube/ytdl-core';
+import { Injectable } from '@nestjs/common';
 import { variablesEnv } from 'src/envs/variables.env';
 
+@Injectable()
 export class VideoService {
   private readonly agent: ytdl.Agent;
 
