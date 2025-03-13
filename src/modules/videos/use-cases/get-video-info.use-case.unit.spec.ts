@@ -96,7 +96,7 @@ describe('GetVideoInfo', () => {
         fields: [
           ValidFields.TITLE,
           ValidFields.CHANNEL,
-          ValidFields.THUMBNAILS,
+          ValidFields.THUMBNAIL,
           ValidFields.FORMATS,
         ],
         url: 'url',
