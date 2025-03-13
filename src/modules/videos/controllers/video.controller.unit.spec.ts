@@ -3,6 +3,7 @@ import { VideoController } from './video.controller';
 import { GetVideoInfo } from '../use-cases/get-video-info.use-case';
 import { JwtService } from '@nestjs/jwt';
 import { ValidFields } from '../dto/get-info.controller.dto';
+import { VideoService } from '../services/video.service';
 
 jest.mock('@nestjs/jwt', () => {
   const actual = jest.requireActual('@nestjs/jwt');
@@ -25,7 +26,7 @@ describe('VideoController', () => {
     const app: TestingModule = await Test.createTestingModule({
       imports: [],
       controllers: [VideoController],
-      providers: [GetVideoInfo, JwtService],
+      providers: [GetVideoInfo, JwtService, VideoService],
     }).compile();
 
     videoController = app.get<VideoController>(VideoController);
