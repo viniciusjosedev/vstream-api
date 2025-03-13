@@ -6,6 +6,8 @@ import {
 } from '../dto/get-video-info.use-case.dto';
 
 export class GetVideoInfo {
+  constructor(private readonly videoService: VideoService) {}
+
   private getFirstNumbersInString(text: string) {
     const numbers = text.match(/^\d+/);
 
@@ -13,13 +15,11 @@ export class GetVideoInfo {
   }
 
   private async getFormatsFiltered(url: string) {
-    const videoService = new VideoService();
-
     const allowFormats = ['240', '360', '480', '720', '1080'];
 
     const data: FormatsFiltered[] = [];
 
-    (await videoService.getFormats(url)).forEach((format) => {
+    (await this.videoService.getFormats(url)).forEach((format) => {
       if (
         allowFormats.includes(
           this.getFirstNumbersInString(format.qualityLabel || '') || 'null',
@@ -44,11 +44,9 @@ export class GetVideoInfo {
     url,
     fields,
   }: GetVideoInfoDTO): Promise<VideoInfoDTO> {
-    const videoService = new VideoService();
-
     const data: VideoInfoDTO = {};
 
-    const { videoDetails } = await videoService.getInfo(url);
+    const { videoDetails } = await this.videoService.getInfo(url);
 
     await Promise.all(
       fields.map(async (field) => {
