@@ -1,21 +1,21 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
-import { CreateSimpleTokenService } from '../use-cases/create-simple-token.use-case';
+import { CreateSimpleTokenUseCase } from '../use-cases/create-simple-token.use-case';
 import { AuthService } from '../services/auth.service';
 
 describe('AuthController', () => {
   let authController: AuthController;
-  let createSimpleTokenService: CreateSimpleTokenService;
+  let createSimpleTokenUseCase: CreateSimpleTokenUseCase;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
-      providers: [CreateSimpleTokenService, AuthService],
+      providers: [CreateSimpleTokenUseCase, AuthService],
     }).compile();
 
     authController = app.get<AuthController>(AuthController);
-    createSimpleTokenService = app.get<CreateSimpleTokenService>(
-      CreateSimpleTokenService,
+    createSimpleTokenUseCase = app.get<CreateSimpleTokenUseCase>(
+      CreateSimpleTokenUseCase,
     );
   });
 
@@ -24,15 +24,15 @@ describe('AuthController', () => {
   });
 
   it('should return object with token', () => {
-    const createSimpleTokenServiceSpy = jest
-      .spyOn(createSimpleTokenService, 'execute')
+    const createSimpleTokenUseCaseSpy = jest
+      .spyOn(createSimpleTokenUseCase, 'execute')
       .mockReturnValue('token');
 
     expect(authController.generateSimpleToken()).toStrictEqual({
       access_token: 'token',
     });
 
-    expect(createSimpleTokenServiceSpy).toHaveBeenCalled();
-    expect(createSimpleTokenServiceSpy).toHaveBeenCalledTimes(1);
+    expect(createSimpleTokenUseCaseSpy).toHaveBeenCalled();
+    expect(createSimpleTokenUseCaseSpy).toHaveBeenCalledTimes(1);
   });
 });

@@ -3,7 +3,7 @@ import { variablesEnv } from 'src/envs/variables.env';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
-export class CreateSimpleTokenService {
+export class CreateSimpleTokenUseCase {
   constructor(private readonly authService: AuthService) {}
 
   public execute() {
