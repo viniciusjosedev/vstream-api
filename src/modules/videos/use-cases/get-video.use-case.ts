@@ -30,7 +30,6 @@ export class GetVideoUseCase {
     const nodeReadable = new Readable({
       async read() {
         const { done, value } = await reader.read();
-        console.log({ value });
 
         if (done) {
           this.push(null);
