@@ -1,53 +1,52 @@
 # vstream-api
 
-![Badge de Status](https://img.shields.io/badge/status-beta-blue)
+![Status Badge](https://img.shields.io/badge/status-beta-blue)
 
-## Índice
+## Table of Contents
 
-- [Sobre](#sobre)
-- [Funcionalidades](#funcionalidades)
-- [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Instalação](#instalação)
-- [Como Usar](#como-usar)
-- [Testes](#testes)
-- [Contribuindo](#contribuindo)
-- [Licença](#licença)
-- [Contato](#contato)
+- [About](#about)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [How to Use](#how-to-use)
+- [Testing](#testing)
+- [License](#license)
+- [Contact](#contact)
 
-## Sobre
+## About
 
-O **vstream-api** é uma API desenvolvida para interagir com videos do YouTube. Este projeto está atualmente em desenvolvimento com status Beta e tem como objetivo principal pegar informações de videos e baixar os mesmos.
+The **vstream-api** is an API developed to interact with YouTube videos. This project is currently in Beta development status and aims to fetch video information and download them.
 
-## Funcionalidades
+## Features
 
-- Pegar informações sobre o video. 
-- Baixar o video nos formatos selecionados.
+- Retrieve video information.
+- Download videos in selected formats.
 
-## Tecnologias Utilizadas
+## Technologies Used
 
 - NestJs
 - @distube/ytdl-core
 
-## Instalação
+## Installation
 
-Para instalar e executar este projeto localmente, siga os passos abaixo:
+To install and run this project locally, follow the steps below:
 
-1. Clone o repositório:
+1. Clone the repository:
    ```bash
    git clone https://github.com/viniciusjosedev/vstream-api.git
    ```
 
-2. Navegue até o diretório do projeto:
+2. Navigate to the project directory:
    ```bash
    cd vstream-api
    ```
 
-3. Instale as dependências:
+3. Install dependencies:
    ```bash
    npm install
    ```
 
-4. Configure as variáveis de ambiente conforme o arquivo `.env.example`:
+4. Configure the environment variables according to the `.env.example` file:
 
 ```bash
 # SET development OR test OR production
@@ -65,65 +64,61 @@ JWT_PASSPHRASE=
 COOKIES=
 ```
 
-5. Inicie o servidor:
+5. Start the server:
    ```bash
    npm run start
    ```
-Ou se preferir, inicie com Docker:
+Or, if you prefer, start with Docker:
 ```bash
 npm run docker:up
 ```
 
-## Como Usar
+## How to Use
 
-Após iniciar o servidor, você pode acessar a API através do endpoint:
+After starting the server, you can access the API via the endpoint:
 
 ```
 http://localhost:8080/
 ```
 
-Utilize ferramentas como [Postman](https://www.postman.com/) ou [Insomnia](https://insomnia.rest/) para testar os endpoints disponíveis.
+Use tools like [Postman](https://www.postman.com/) or [Insomnia](https://insomnia.rest/) to test the available endpoints.
 
-## Testes
+## Testing
 
-Para executar os testes unitários, utilize o comando:
+To run unit tests, use the command:
 
 ```bash
 npm run test
 ```
 
-Pra testes de integração, utilize o comando:
+For integration tests, use the command:
 
 ```bash
 npm run test:e2e
 ```
 
-Caso queira rodar os testes dentro do docker, utilize o comando:
+If you want to run the tests inside Docker, use the command:
 
 ```bash
 npm run docker:attach
 ```
 
-## Contribuindo
+## License
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests. Para maiores informações, consulte o arquivo [CONTRIBUTING.md](CONTRIBUTING.md).
+This project is licensed under the [MIT License](LICENSE).
 
-## Licença
+## Contact
 
-Este projeto está licenciado sob a [Licença MIT](LICENSE).
-
-## Contato
-
-Para mais informações, entre em contato com [Vinicius José](mailto:viniciusjosedev@gmail.com).
+For more information, contact [Vinicius José](mailto:viniciusjosedev@gmail.com).
 
 ---
 
-Este modelo de README é baseado nas melhores práticas recomendadas pela comunidade. Para mais detalhes, consulte os seguintes recursos:
+This README template follows best practices recommended by the community. For more details, check out the following resources:
 
-- [Como fazer um bom README](https://blog.rocketseat.com.br/como-fazer-um-bom-readme/)
-- [Como escrever um README incrível no seu Github - Alura](https://www.alura.com.br/artigos/escrever-bom-readme)
-- [Um modelo para fazer um bom README.md - GitHub Gist](https://gist.github.com/lohhans/f8da0b147550df3f96914d3797e9fb89)
+- [How to Write a Good README](https://blog.rocketseat.com.br/como-fazer-um-bom-readme/)
+- [How to Write an Amazing README on Your GitHub - Alura](https://www.alura.com.br/artigos/escrever-bom-readme)
+- [A Template for a Good README.md - GitHub Gist](https://gist.github.com/lohhans/f8da0b147550df3f96914d3797e9fb89)
 
-Além disso, você pode assistir ao seguinte vídeo para entender melhor como criar um README eficaz:
+Additionally, you can watch the following video to better understand how to create an effective README:
 
-[Como fazer um bom README](https://www.youtube.com/watch?v=k4Rsy8GbKE0&utm_source=chatgpt.com)
+[How to Write a Good README](https://www.youtube.com/watch?v=k4Rsy8GbKE0&utm_source=chatgpt.com)
