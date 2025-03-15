@@ -121,4 +121,4 @@ This README template follows best practices recommended by the community. For mo
 
 Additionally, you can watch the following video to better understand how to create an effective README:
 
-[How to Write a Good README](https://www.youtube.com/watch?v=k4Rsy8GbKE0&utm_source=chatgpt.com)
+[How to Write a Good README (PT-BR)](https://www.youtube.com/watch?v=k4Rsy8GbKE0)
