@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GetVideoInfo } from '../use-cases/get-video-info.use-case';
+import { GetVideoInfoUseCase } from '../use-cases/get-video-info.use-case';
 import { VideoService } from '../services/video.service';
 import { ValidFields } from '../dto/get-info.controller.dto';
 
@@ -17,17 +17,17 @@ jest.mock('@nestjs/jwt', () => {
 });
 
 describe('GetVideoInfo', () => {
-  let getVideoInfo: GetVideoInfo;
+  let getVideoInfoUseCase: GetVideoInfoUseCase;
   let videoService: VideoService;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       imports: [],
       controllers: [],
-      providers: [GetVideoInfo, VideoService],
+      providers: [GetVideoInfoUseCase, VideoService],
     }).compile();
 
-    getVideoInfo = app.get<GetVideoInfo>(GetVideoInfo);
+    getVideoInfoUseCase = app.get<GetVideoInfoUseCase>(GetVideoInfoUseCase);
     videoService = app.get<VideoService>(VideoService);
   });
 
@@ -92,7 +92,7 @@ describe('GetVideoInfo', () => {
       ] as any);
 
     expect(
-      await getVideoInfo.execute({
+      await getVideoInfoUseCase.execute({
         fields: [
           ValidFields.TITLE,
           ValidFields.CHANNEL,

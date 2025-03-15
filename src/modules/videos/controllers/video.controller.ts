@@ -1,18 +1,27 @@
 import {
+  Body,
   Controller,
   Get,
+  Post,
   Query,
+  Res,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
-import { GetInfoDTO } from '../dto/get-info.controller.dto';
+import { GetInfoControllerDTO } from '../dto/get-info.controller.dto';
 import { AuthMiddleware } from 'src/modules/auth/middlewares/auth.middleware';
-import { GetVideoInfo } from '../use-cases/get-video-info.use-case';
+import { GetVideoInfoUseCase } from '../use-cases/get-video-info.use-case';
+import { GetVideoControllerDTO } from '../dto/get-video.controller.dto';
+import { GetVideoUseCase } from '../use-cases/get-video.use-case';
+import { Response } from 'express';
 
 @Controller('/video')
 @UseGuards(AuthMiddleware)
 export class VideoController {
-  constructor(private readonly getVideoInfo: GetVideoInfo) {}
+  constructor(
+    private readonly getVideoInfoUseCase: GetVideoInfoUseCase,
+    private readonly getVideoUseCase: GetVideoUseCase,
+  ) {}
 
   @Get('/info')
   public getInfo(
@@ -22,8 +31,23 @@ export class VideoController {
         transform: true,
       }),
     )
-    query: GetInfoDTO,
+    query: GetInfoControllerDTO,
   ) {
-    return this.getVideoInfo.execute(query);
+    return this.getVideoInfoUseCase.execute(query);
+  }
+
+  @Post('/download')
+  public getVideo(
+    @Body(
+      new ValidationPipe({
+        forbidUnknownValues: true,
+        transform: true,
+      }),
+    )
+    body: GetVideoControllerDTO,
+    @Res()
+    res: Response,
+  ) {
+    return this.getVideoUseCase.execute(body.url, res);
   }
 }

@@ -1,9 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { VideoController } from './video.controller';
-import { GetVideoInfo } from '../use-cases/get-video-info.use-case';
+import { GetVideoInfoUseCase } from '../use-cases/get-video-info.use-case';
 import { JwtService } from '@nestjs/jwt';
 import { ValidFields } from '../dto/get-info.controller.dto';
 import { VideoService } from '../services/video.service';
+import { GetVideoUseCase } from '../use-cases/get-video.use-case';
 
 jest.mock('@nestjs/jwt', () => {
   const actual = jest.requireActual('@nestjs/jwt');
@@ -20,17 +21,22 @@ jest.mock('@nestjs/jwt', () => {
 
 describe('VideoController', () => {
   let videoController: VideoController;
-  let getVideoInfo: GetVideoInfo;
+  let getVideoInfoUseCase: GetVideoInfoUseCase;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       imports: [],
       controllers: [VideoController],
-      providers: [GetVideoInfo, JwtService, VideoService],
+      providers: [
+        GetVideoInfoUseCase,
+        GetVideoUseCase,
+        JwtService,
+        VideoService,
+      ],
     }).compile();
 
     videoController = app.get<VideoController>(VideoController);
-    getVideoInfo = app.get<GetVideoInfo>(GetVideoInfo);
+    getVideoInfoUseCase = app.get<GetVideoInfoUseCase>(GetVideoInfoUseCase);
   });
 
   afterEach(() => {
@@ -62,8 +68,8 @@ describe('VideoController', () => {
       title: 'title',
     };
 
-    const getVideoInfoSpy = jest
-      .spyOn(getVideoInfo, 'execute')
+    const getVideoInfoUseCaseSpy = jest
+      .spyOn(getVideoInfoUseCase, 'execute')
       .mockResolvedValue(getVideoInfoMock);
 
     expect(
@@ -78,7 +84,7 @@ describe('VideoController', () => {
       }),
     ).toStrictEqual(getVideoInfoMock);
 
-    expect(getVideoInfoSpy).toHaveBeenCalled();
-    expect(getVideoInfoSpy).toHaveBeenCalledTimes(1);
+    expect(getVideoInfoUseCaseSpy).toHaveBeenCalled();
+    expect(getVideoInfoUseCaseSpy).toHaveBeenCalledTimes(1);
   });
 });

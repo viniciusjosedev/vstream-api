@@ -1,6 +1,6 @@
 import * as ytdl from '@distube/ytdl-core';
 
-export interface GetVideoInfoDTO {
+export interface GetVideoInfoUseCaseDTO {
   url: string;
   fields: Array<'thumbnail' | 'formats' | 'title' | 'channel'>;
 }
@@ -14,7 +14,7 @@ export interface FormatsFiltered {
   url: string;
 }
 
-export interface VideoInfoDTO {
+export interface VideoInfoUseCaseDTO {
   title?: string;
   channel?: {
     photo_url: string;

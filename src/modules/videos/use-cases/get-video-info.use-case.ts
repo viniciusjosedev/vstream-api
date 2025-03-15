@@ -1,13 +1,13 @@
 import { VideoService } from '../services/video.service';
 import {
   FormatsFiltered,
-  GetVideoInfoDTO,
-  VideoInfoDTO,
+  GetVideoInfoUseCaseDTO,
+  VideoInfoUseCaseDTO,
 } from '../dto/get-video-info.use-case.dto';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class GetVideoInfo {
+export class GetVideoInfoUseCase {
   constructor(private readonly videoService: VideoService) {}
 
   private getFirstNumbersInString(text: string) {
@@ -45,8 +45,8 @@ export class GetVideoInfo {
   public async execute({
     url,
     fields,
-  }: GetVideoInfoDTO): Promise<VideoInfoDTO> {
-    const data: VideoInfoDTO = {};
+  }: GetVideoInfoUseCaseDTO): Promise<VideoInfoUseCaseDTO> {
+    const data: VideoInfoUseCaseDTO = {};
 
     const { videoDetails } = await this.videoService.getInfo(url);
 

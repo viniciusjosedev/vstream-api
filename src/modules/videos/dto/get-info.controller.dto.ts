@@ -8,7 +8,7 @@ export enum ValidFields {
   CHANNEL = 'channel',
 }
 
-export class GetInfoDTO {
+export class GetInfoControllerDTO {
   @IsNotEmpty()
   url: string;
 
