@@ -15,14 +15,18 @@ export class GetVideoUseCase {
       throw new Error('Body is not stream');
     }
 
+    res.status(200);
+
     res.setHeader(
       'Content-Type',
       response.headers.get('Content-Type') || 'application/octet-stream',
     );
+
     res.setHeader(
-      'Content-Length',
+      'X-Content-Length',
       response.headers.get('Content-Length') || '',
     );
+
     res.setHeader('Transfer-Encoding', 'chunked');
 
     const reader = response.body.getReader();
