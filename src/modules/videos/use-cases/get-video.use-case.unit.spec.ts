@@ -81,6 +81,7 @@ describe('GetVideoUseCase', () => {
       write: () => {},
       once: () => {},
       emit: () => {},
+      status: () => {},
     } as unknown as Response;
 
     expect(await getVideoUseCase.execute('url', res)).toBeUndefined();
