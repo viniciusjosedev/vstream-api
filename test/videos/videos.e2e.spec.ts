@@ -201,4 +201,68 @@ describe('VideosRouter (e2e)', () => {
       );
     });
   });
+
+  describe('/video/download (POST)', () => {
+    it('should error if Authorization header is empty', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/video/download')
+        .send({
+          url: 'url',
+        });
+
+      const { body } = response;
+
+      expect(body).toHaveProperty('message', 'Unauthorized');
+      expect(body).toHaveProperty('statusCode', 401);
+    });
+
+    it('should error if url body is empty', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/video/download')
+        .set('Authorization', `Bearer ${access_token}`);
+
+      const { body } = response;
+
+      expect(body).toHaveProperty('error', 'Bad Request');
+      expect(body).toHaveProperty('message', ['url should not be empty']);
+      expect(body).toHaveProperty('statusCode', 400);
+    });
+
+    it('should return file', async () => {
+      const fetchSpy = jest.spyOn(global, 'fetch').mockResolvedValue({
+        ok: true,
+        body: new ReadableStream({
+          start(controller) {
+            const encoder = new TextEncoder();
+            const chunk = encoder.encode('Simulando um corpo de resposta');
+            controller.enqueue(chunk);
+            controller.close();
+          },
+        }),
+        headers: {
+          get: (param) => {
+            if (param === 'Content-Length') {
+              return '12312';
+            }
+          },
+        },
+      } as any);
+
+      const response = await request(app.getHttpServer())
+        .post('/video/download')
+        .send({
+          url: 'url',
+        })
+        .set('Authorization', `Bearer ${access_token}`);
+
+      const { body, status } = response;
+
+      expect(status).toBe(200);
+
+      expect(body).toBeInstanceOf(Buffer);
+
+      expect(fetchSpy).toHaveBeenCalled();
+      expect(fetchSpy).toHaveBeenCalledTimes(1);
+    });
+  });
 });
