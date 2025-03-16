@@ -1,6 +1,10 @@
 import {
+  ArgumentsHost,
   CallHandler,
+  Catch,
+  ExceptionFilter,
   ExecutionContext,
+  HttpException,
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
@@ -35,5 +39,29 @@ export class ResponseInterceptor<T>
         return data as ResponseFormat<T>;
       }),
     );
+  }
+}
+
+@Catch(HttpException)
+@Injectable()
+export class ExceptionInterceptor implements ExceptionFilter {
+  catch(exception: HttpException, host: ArgumentsHost) {
+    const response = host.switchToHttp().getResponse<Response>();
+    const status = exception.getStatus();
+
+    const messageResponse = exception.getResponse();
+    let message = 'An error occurred';
+    let statusCode = 500;
+
+    if (typeof messageResponse === 'object') {
+      message = (messageResponse as any)?.message || message;
+      statusCode = (messageResponse as any)?.statusCode || statusCode;
+    }
+
+    response.status(status).json({
+      message,
+      statusCode,
+      success: false,
+    });
   }
 }
