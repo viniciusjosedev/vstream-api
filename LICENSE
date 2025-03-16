@@ -1,21 +1,17 @@
-MIT License
+Educational Use License
 
 Copyright (c) 2025 Vinicius José
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This software is licensed under the terms of the **Educational Use License**. You are free to use, copy, modify, and distribute the software, **but only for educational purposes**. Commercial use, including but not limited to selling, promoting, or distributing the software for profit, is strictly prohibited.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Permissions:
+- You may **use** the software for **personal learning, academic study, research, or teaching purposes**.
+- You may **distribute** copies of the software in its original or modified form, as long as you include this license and the condition that it is for educational use only.
+- You may **modify** the software, provided that the modified version is not used for commercial purposes and is distributed with this same license.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Restrictions:
+- **No Commercial Use**: The software may not be used, distributed, or modified for any commercial purpose. "Commercial" refers to any activity aimed at generating profit or promoting products or services for financial gain.
+- **Redistribution**: If you redistribute the software, either modified or unmodified, you must do so under the same terms, ensuring that it is clear the software is for educational purposes only.
+
+No Warranty:
+This software is provided "as is", without any warranty of any kind, either express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement. In no event shall the authors or copyright holders be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or the use or other dealings in the software.
