@@ -18,6 +18,7 @@
 The **vstream-api** is an API developed to interact with YouTube videos. This project is currently in Beta development status and aims to fetch video information and download them.
 
 In addition to the code being open source, the API is public, anyone can access it at: https://vstream-api.vinion.dev.
+To see all routes, go to: https://vstream-api.vinion.dev/api
 
 ## Features
 
