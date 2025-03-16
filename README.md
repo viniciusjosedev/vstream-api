@@ -75,13 +75,90 @@ npm run docker:up
 
 ## How to Use
 
-After starting the server, you can access the API via the endpoint:
+Use tools like [Postman](https://www.postman.com/) or [Insomnia](https://insomnia.rest/) to test the available endpoints. After starting the server, you can access the API via the endpoint:
 
 ```
 http://localhost:8080/
 ```
 
-Use tools like [Postman](https://www.postman.com/) or [Insomnia](https://insomnia.rest/) to test the available endpoints.
+You can see all endpoints with swagger in the /api route:
+
+```
+http://localhost:8080/api
+```
+
+The basic usage flow starts with getting your token from the /auth/generate-simple-token route.
+
+```bash
+curl -X POST "http://localhost:8080/auth/generate-simple-token" \
+     -H "Content-Type: application/json" \
+     -d '{}'
+```
+
+The return of this is:
+
+```json
+{
+  "success": true,
+  "data": {
+    "access_token": "TOKEN"
+  },
+  "statusCode": 201
+}
+```
+
+You can then get information about any public YouTube video using the /video/info route. To do this, you need to include the token in the request header (Authorization). In addition, the url and fields parameters must be passed as query parameters. Fields can be: title, channel, formats, thumbnail
+
+```bash
+curl -X GET "http://localhost:8080/video/info?url=youtube.com/watch?v=jNQXAC9IVRw&fields=title,channel,thumbnail,formats" \
+     -H "Authorization: Bearer access_token" \
+     -H "Content-Type: application/json"
+```
+
+The complete return if you pass all the fields is this:
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "data": {
+    "title": "Me at the zoo",
+    "channel": {
+      "channel_url": "https://www.youtube.com/channel/UC4QobU6STFB0P71PMvOGN5A",
+      "name": "jawed",
+      "photo_url": "https://yt3.ggpht.com/uI3VE4PVqvCy0xnWLqMJnEzyBUm3T8VHOCp4ee-1RxdHqKXCdUE_qXYQnpf9AfuEoIPactVyDhM=s48-c-k-c0x00ffffff-no-rj"
+    },
+    "thumbnail": {
+      "url": "https://i.ytimg.com/vi/jNQXAC9IVRw/hqdefault.jpg?sqp=-oaymwE2CNACELwBSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgBvgKAAvABigIMCAAQARhVIFkoZTAP&rs=AOn4CLB7NY0fx4yZYDj27223V3b7Sowf5w",
+      "width": 336,
+      "height": 188
+    },
+    "formats": [
+      {
+        "hasVideo": true,
+        "hasAudio": true,
+        "qualityVideo": "240p",
+        "qualityAudio": "small",
+        "format": "video/mp4",
+        "url": "<URL-DOWNLOAD-VIDEO>"
+      },
+      "..."
+    ]
+  }
+}
+```
+
+Finally, you can download the video by choosing the URL of the format you acquired in the previous request in the formats array.
+
+```bash
+curl -X POST "http://localhost:8080/video/download" \
+     -H "Authorization: Bearer access_token" \
+     -H "Content-Type: application/json" \
+     -d '{ 
+           "url": "<URL-DOWNLOAD-VIDEO>" 
+        }' \
+     -o video.mp4
+```
 
 ## Testing
 
