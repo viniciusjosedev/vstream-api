@@ -185,7 +185,7 @@ npm run docker:attach
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [Educational Use License](LICENSE).
 
 ## Contact
 
