@@ -15,8 +15,6 @@ export class GetVideoUseCase {
       throw new Error('Body is not stream');
     }
 
-    res.status(200);
-
     res.setHeader(
       'Content-Type',
       response.headers.get('Content-Type') || 'application/octet-stream',
