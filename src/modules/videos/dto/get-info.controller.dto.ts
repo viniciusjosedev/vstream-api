@@ -1,5 +1,6 @@
 import { ArrayMinSize, IsArray, IsEnum, IsNotEmpty } from 'class-validator';
 import { Transform } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 export enum ValidFields {
   THUMBNAIL = 'thumbnail',
@@ -9,9 +10,17 @@ export enum ValidFields {
 }
 
 export class GetInfoControllerDTO {
+  @ApiProperty({ required: true })
   @IsNotEmpty()
   url: string;
 
+  @ApiProperty({
+    required: true,
+    description: 'Fields to include in the response',
+    enum: ValidFields,
+    isArray: true,
+    example: ['title', 'formats'],
+  })
   @IsNotEmpty()
   @IsArray()
   @ArrayMinSize(1)
