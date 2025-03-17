@@ -258,7 +258,7 @@ const token = 'access_token';
 
 async function downloadVideo() {
   try {
-    const response = await fetch('https://vstream-api.vinion.dev/video/download', {
+    const response = await fetch('http://localhost:8080/video/download', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
