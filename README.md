@@ -155,6 +155,8 @@ Finally, you can download the video by choosing the URL of the format you acquir
 
 In the example below, the files are all being saved with the .mp4 extension, but you must treat the extension by the file type, as it can be of different types depending on the format you choose.
 
+OBS: This request returns an X-Content-Length header, which lets you know the size of the file. This is useful if you want an estimate of how long the files will take to download (load).
+
 ```bash
 curl -X POST "http://localhost:8080/video/download" \
      -H "Authorization: Bearer access_token" \
@@ -164,6 +166,8 @@ curl -X POST "http://localhost:8080/video/download" \
         }' \
      -o video.mp4
 ```
+
+Thi
 
 If you want, below is a code for js, you can run it in any console in the browser.
 
