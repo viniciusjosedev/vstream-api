@@ -163,6 +163,84 @@ curl -X POST "http://localhost:8080/video/download" \
      -o video.mp4
 ```
 
+If you want, below is a code for js, you can run it in any console in the browser.
+
+```bash
+async function downloadFile() {
+  try {
+      const url = "https://vstream-api.vinion.dev/video/download";
+      const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+              'Authorization': 'Bearer access_token',
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              url: 'https://rr4---sn-p5qlsn6l.googlevideo.com...'
+          })
+      });
+
+      if (!response.ok) {
+          throw new Error(`Err: ${response.status} ${response.statusText}`);
+      }
+
+      const contentLength = response.headers.get("X-Content-Length");
+      const totalSize = contentLength ? parseInt(contentLength, 10) : null;
+
+      
+      console.log(`All size file: ${totalSize ? `${(totalSize / 1024 / 1024).toFixed(2)} MB` : 'Unknown'}`);
+
+      console.log('contentLength', contentLength)
+
+      const reader = response.body.getReader();
+      let receivedSize = 0;
+      const chunks = [];
+
+      while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          chunks.push(value);
+          receivedSize += value.length;
+
+          if (totalSize) {
+              const progress = ((receivedSize / totalSize) * 100).toFixed(2);
+              console.log(`Progress: ${progress}% (${(receivedSize / 1024 / 1024).toFixed(2)} MB done)`);
+          } else {
+              console.log(`Downloading... (${(receivedSize / 1024 / 1024).toFixed(2)} MB done)`);
+          }
+      }
+
+      const blob = new Blob(chunks);
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+
+      const contentDisposition = response.headers.get("Content-Disposition");
+      let fileName = "download.mp4";
+
+      if (contentDisposition) {
+          const match = contentDisposition.match(/filename="(.+)"/);
+          if (match && match[1]) {
+              fileName = match[1];
+          }
+      }
+
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href);
+
+      console.log("✅ Download done!");
+
+  } catch (error) {
+      console.error("❌ Err in download file:", error);
+  }
+}
+
+downloadFile();
+```
+
 ## Testing
 
 To run unit tests, use the command:
