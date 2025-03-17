@@ -153,6 +153,8 @@ The complete return if you pass all the fields is this:
 
 Finally, you can download the video by choosing the URL of the format you acquired in the previous request in the formats array.
 
+In the example below, the files are all being saved with the .mp4 extension, but you must treat the extension by the file type, as it can be of different types depending on the format you choose.
+
 ```bash
 curl -X POST "http://localhost:8080/video/download" \
      -H "Authorization: Bearer access_token" \
