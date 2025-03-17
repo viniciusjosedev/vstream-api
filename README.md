@@ -243,7 +243,7 @@ async function downloadFile() {
 downloadFile();
 ```
 
-Another example, this time in a node js environment (18+). Install the file-type lib, version 16.5.4.
+Another example, this time in a node js environment (18+). For this example, install the file-type lib, version 16.5.4.
 
 ```bash
 npm i file-type@16.5.4
