@@ -167,7 +167,7 @@ curl -X POST "http://localhost:8080/video/download" \
 
 If you want, below is a code for js, you can run it in any console in the browser.
 
-```bash
+```js
 async function downloadFile() {
   try {
       const url = "http://localhost:8080/video/download";
@@ -241,6 +241,58 @@ async function downloadFile() {
 }
 
 downloadFile();
+```
+
+Another example, this time in a node js environment (18+)
+
+```js
+const fs = require('fs');
+const FileType = require('file-type')
+
+const videoUrl = 'https://rr4---sn-p5qlsn6l.googlevideo.com/videoplayback?expire=1742266898&ei=sY3YZ8PzO5rDkucP1sOGoAE&ip=154.38.181.126&id=o-AFb9kjYOgBEIl3rpuJ4LxSmjLgy7Z_d9sW_7xIFtJ5wv&itag=18&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&met=1742245297%2C&mh=VD&mm=31%2C29&mn=sn-p5qlsn6l%2Csn-p5qddn76&ms=au%2Crdu&mv=m&mvi=4&pl=26&rms=au%2Cau&initcwndbps=598750&siu=1&bui=AccgBcPQNn3Gt2EZy2E_nvKsGCfHPLxZLT9yceHevRifrdIC6TVYueig-BeIRGaOk_Pz0JtO5A&spc=_S3wKijLhBLcv_UM74pn9RHDdlnk4LskDgDci5qGeRPvwDGiU7QF-n5nQsnFQ2klIf7PNkRih_dC3sUxsRI&vprv=1&svpuc=1&mime=video%2Fmp4&ns=uqPyHlBXWRYhYEXLpxY1rGYQ&rqh=1&gir=yes&clen=791367&ratebypass=yes&dur=19.063&lmt=1680501259475484&mt=1742243590&fvip=1&fexp=51355912%2C51358317%2C51411872&c=WEB&sefc=1&txp=4530434&n=WE0D8kEGeBe-cw&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Csiu%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cns%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AJfQdSswRQIgUHasYuP7lcPMxC03T2H1qWFFys5qlXz4DV23Hxc3Lc8CIQCmCFZC-m3QO6PFQlLpx0UdOHjUH3rKgQiKdJ_2m58GHQ%3D%3D&lsparams=met%2Cmh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Crms%2Cinitcwndbps&lsig=AFVRHeAwRQIhAK-wululu3vi-GtFliLG-90VNtvHLlEjEcewaAt2G5bfAiB66mYHyWj_44rHmcpJ0A8ZcbOh0OF8OHKrQ4Xl8A3dRA%3D%3D';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzcGhyYXNlIjoicGFzc3BocmFzZSIsImlhdCI6MTc0MjE2MTQ0OSwiZXhwIjoxNzQ5OTM3NDQ5fQ.keooWYceo37G2q7EkyParbz5AQISxdqsfZ4o5kKrU_k';
+
+async function downloadVideo() {
+  try {
+    const response = await fetch('https://vstream-api.vinion.dev/video/download', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        url: videoUrl
+      })
+    });
+
+    if (!response.ok) {
+      console.log(await response.json());
+      
+      throw new Error('Error making the request');
+    }
+
+    const arrayBuffer = await response.arrayBuffer();
+
+    const fileType = await FileType.fromBuffer(arrayBuffer);
+
+    if (!fileType) {
+      throw new Error("Impossible to get the file type of file.");
+    }
+
+    let extension = fileType.ext;		
+
+    const buffer = Buffer.from(arrayBuffer)
+
+    await fs.promises.writeFile(`file.${extension}`, buffer)
+
+    console.log('Download completed!');
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+downloadVideo();
+
 ```
 
 ## Testing
