@@ -168,7 +168,7 @@ If you want, below is a code for js, you can run it in any console in the browse
 ```bash
 async function downloadFile() {
   try {
-      const url = "https://vstream-api.vinion.dev/video/download";
+      const url = "http://localhost:8080/video/download";
       const response = await fetch(url, {
           method: 'POST',
           headers: {
