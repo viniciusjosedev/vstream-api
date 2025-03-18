@@ -151,23 +151,13 @@ The complete return if you pass all the fields is this:
 }
 ```
 
-Finally, you can download the video by choosing the URL of the format you acquired in the previous request in the formats array.
+Finally, you can download the video by choosing the URL of the format you acquired in the previous request in the formats array. All request examples were demonstrated with curl, however, the route to download the file is a stream, that is, the server sends it in chunks, so famous request interfaces such as curl and wget may not work, so I recommend following the examples below.
 
 In the example below, the files are all being saved with the .mp4 extension, but you must treat the extension by the file type, as it can be of different types depending on the format you choose.
 
 OBS: This request returns an X-Content-Length header, which lets you know the size of the file. This is useful if you want an estimate of how long the files will take to download (load).
 
-```bash
-curl -X POST "http://localhost:8080/video/download" \
-     -H "Authorization: Bearer access_token" \
-     -H "Content-Type: application/json" \
-     -d '{ 
-           "url": "<URL-DOWNLOAD-VIDEO>" 
-        }' \
-     -o video.mp4
-```
-
-If you want, below is a code for js, you can run it in any console in the browser.
+Below is a code for js, you can run it in any console in the browser.
 
 ```js
 async function downloadFile() {
