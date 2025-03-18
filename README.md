@@ -248,7 +248,7 @@ const FileType = require('file-type')
 const videoUrl = 'https://rr4---sn-p5qlsn6l.googlevideo.com...';
 const token = 'access_token';
 
-async function downloadVideo() {
+async function downloadFile() {
   try {
     const response = await fetch('http://localhost:8080/video/download', {
       method: 'POST',
@@ -287,7 +287,7 @@ async function downloadVideo() {
   }
 }
 
-downloadVideo();
+downloadFile();
 
 ```
 
