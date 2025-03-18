@@ -167,8 +167,6 @@ curl -X POST "http://localhost:8080/video/download" \
      -o video.mp4
 ```
 
-Thi
-
 If you want, below is a code for js, you can run it in any console in the browser.
 
 ```js
