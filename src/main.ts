@@ -8,6 +8,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: {
       origin: '*',
+      methods: 'GET,POST',
+      allowedHeaders: 'Content-Type, Authorization, X-Content-Length',
+      exposedHeaders: 'X-Content-Length, Content-Disposition',
     },
   });
   app.useGlobalInterceptors(new ResponseInterceptor());
