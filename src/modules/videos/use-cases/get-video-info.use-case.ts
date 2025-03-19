@@ -10,34 +10,54 @@ import { Injectable } from '@nestjs/common';
 export class GetVideoInfoUseCase {
   constructor(private readonly videoService: VideoService) {}
 
-  private getFirstNumbersInString(text: string) {
+  private getFirstNumbersInString(text: string): string | null {
     const numbers = text.match(/^\d+/);
-
     return numbers ? numbers[0] : null;
+  }
+
+  private async isUrlAccessible(url: string): Promise<boolean> {
+    try {
+      const response = await fetch(url, {
+        method: 'HEAD',
+        headers: {
+          'User-Agent': 'Mozilla/5.0',
+        },
+      });
+
+      return response.ok;
+    } catch (error) {
+      console.error('Error in access a URL:', error);
+      return false;
+    }
   }
 
   private async getFormatsFiltered(url: string) {
     const allowFormats = ['240', '360', '480', '720', '1080'];
-
     const data: FormatsFiltered[] = [];
 
-    (await this.videoService.getFormats(url)).forEach((format) => {
-      if (
-        allowFormats.includes(
-          this.getFirstNumbersInString(format.qualityLabel || '') || 'null',
-        ) ||
-        (format.hasAudio && !format.hasVideo)
-      ) {
-        data.push({
-          hasVideo: format.hasVideo,
-          hasAudio: format.hasAudio,
-          qualityVideo: format.qualityLabel,
-          qualityAudio: format.quality,
-          format: format.mimeType?.split(';')[0] as string,
-          url: format.url,
-        });
-      }
-    });
+    const formats = await this.videoService.getFormats(url);
+
+    await Promise.all(
+      formats.map(async (format) => {
+        const quality =
+          this.getFirstNumbersInString(format.qualityLabel || '') || 'null';
+        const hasValidUrl = await this.isUrlAccessible(format.url);
+
+        if (
+          (allowFormats.includes(quality) && hasValidUrl) ||
+          (format.hasAudio && !format.hasVideo && hasValidUrl)
+        ) {
+          data.push({
+            hasVideo: format.hasVideo,
+            hasAudio: format.hasAudio,
+            qualityVideo: format.qualityLabel,
+            qualityAudio: format.quality,
+            format: format.mimeType?.split(';')[0] as string,
+            url: format.url,
+          });
+        }
+      }),
+    );
 
     return data;
   }
