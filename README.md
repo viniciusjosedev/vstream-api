@@ -153,31 +153,31 @@ The complete return if you pass all the fields is this:
 
 To download the video, you should choose the desired format URLs from the previous request in the "formats" array. Note the following properties:
 
-formats: Array with different available formats
-hasVideo and hasAudio: Indicate whether the format contains video and/or audio
+- formats: Array with different available formats;
+- hasVideo and hasAudio: Indicate whether the format contains video and/or audio.
 
 It's important to understand that:
 
-Some lower quality formats will have both hasVideo: true and hasAudio: true
-Most higher quality formats will have hasVideo: true but hasAudio: false
-A few formats will be audio-only (hasVideo: false and hasAudio: true)
+- Some lower quality formats will have both hasVideo: true and hasAudio: true;
+- Most higher quality formats will have hasVideo: true but hasAudio: false;
+- A few formats will be audio-only (hasVideo: false and hasAudio: true).
 
-This is why the API allows you to combine custom video and audio selections through the /video/download endpoint. You need to send:
+This is why the API allows you to combine custom video and audio selections through the /video/download endpoint. You can send:
 
-urlVideo: URL of the chosen video format
-urlAudio: URL of the chosen audio format
+- urlVideo: URL of the chosen video format;
+- urlAudio: URL of the chosen audio format.
 
 Important format details:
 
-If you send only the urlAudio parameter, the audio will always be delivered in MP3 format
-If you send both video and audio parameters or just the video parameter, the video will maintain the same format it had in the previous request
-If you select a format that already has both video and audio (hasVideo: true and hasAudio: true) as your urlVideo and still provide a urlAudio, the original audio in the video will be replaced by the audio you specified in urlAudio
+- If you send only the urlAudio parameter, the audio will always be delivered in MP3 format;
+- If you send both video and audio parameters or just the video parameter, the video will maintain the same format it had in the previous request;
+- If you select a format that already has both video and audio (hasVideo: true and hasAudio: true) as your urlVideo and still provide a urlAudio, the original audio in the video will be replaced by the audio you specified in urlAudio.
 
 Additional notes:
 
-The API uses streaming (sending by chunks)
-Tools like curl and wget may not work properly
-The X-Content-Length header provides the file size to estimate download time
+- The API uses streaming (sending by chunks);
+- Tools like curl and wget may not work properly;
+- The X-Content-Length header provides the file size to estimate download time.
 
 Check the file type to use the correct extension, although in the examples all are saved as .mp4.
 JavaScript code is available that can be run in any browser console to facilitate the process.
