@@ -1,0 +1,45 @@
+name: vstream-api tests
+
+on:
+  pull_request:
+    paths:
+      - '**.js'
+      - '**.ts'
+      - '**.json'
+      - '**.yml'
+      - 'Dockerfile'
+    branches: [ "main" ]
+
+  push:
+    paths:
+      - '**.js'
+      - '**.ts'
+      - '**.json'
+      - '**.yml'
+      - 'Dockerfile'
+    branches: [ "main" ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          
+      - name: Installing dependencies
+        run: npm i
+        
+      - name: Run unit tests
+        run: npm test
+        
+      - name: Run e2e tests
+        run: npm run test:e2e
