@@ -6,13 +6,15 @@ WORKDIR /app
 COPY . .
 
 # Development stage
-FROM node:20-alpine3.16 AS development
+FROM node:22-alpine3.20 AS development
 
 WORKDIR /app
 
 COPY --from=build /app /app
 
 RUN npm install
+
+RUN apk add ffmpeg
 
 CMD ["npm", "run", "start:dev"]
 
@@ -24,6 +26,8 @@ WORKDIR /app
 COPY --from=build /app /app
 
 RUN npm ci
+
+RUN apk add ffmpeg
 
 RUN npm run build
 
