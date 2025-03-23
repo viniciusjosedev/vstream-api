@@ -112,6 +112,9 @@ export class VideoController {
     @Res()
     res: Response,
   ) {
-    return this.getVideoUseCase.execute(body.url, res);
+    return this.getVideoUseCase.execute({
+      res,
+      ...body,
+    });
   }
 }
