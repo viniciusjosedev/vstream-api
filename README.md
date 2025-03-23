@@ -151,13 +151,36 @@ The complete return if you pass all the fields is this:
 }
 ```
 
-Finally, you can download the video by choosing the URL of the format you acquired in the previous request in the formats array. All request examples were demonstrated with curl, however, the route to download the file is a stream, that is, the server sends it in chunks, so famous request interfaces such as curl and wget may not work, so I recommend following the examples below.
+To download the video, you should choose the desired format URLs from the previous request in the "formats" array. Note the following properties:
 
-In the example below, the files are all being saved with the .mp4 extension, but you must treat the extension by the file type, as it can be of different types depending on the format you choose.
+- formats: Array with different available formats;
+- hasVideo and hasAudio: Indicate whether the format contains video and/or audio.
 
-OBS: This request returns an X-Content-Length header, which lets you know the size of the file. This is useful if you want an estimate of how long the files will take to download (load).
+It's important to understand that:
 
-Below is a code for js, you can run it in any console in the browser.
+- Some lower quality formats will have both hasVideo: true and hasAudio: true;
+- Most higher quality formats will have hasVideo: true but hasAudio: false;
+- A few formats will be audio-only (hasVideo: false and hasAudio: true).
+
+This is why the API allows you to combine custom video and audio selections through the /video/download endpoint. You can send:
+
+- urlVideo: URL of the chosen video format;
+- urlAudio: URL of the chosen audio format.
+
+Important format details:
+
+- If you send only the urlAudio parameter, the audio will always be delivered in MP3 format;
+- If you send both video and audio parameters or just the video parameter, the video will maintain the same format it had in the previous request;
+- If you select a format that already has both video and audio (hasVideo: true and hasAudio: true) as your urlVideo and still provide a urlAudio, the original audio in the video will be replaced by the audio you specified in urlAudio.
+
+Additional notes:
+
+- The API uses streaming (sending by chunks);
+- Tools like curl and wget may not work properly;
+- The X-Content-Length header provides the file size to estimate download time.
+
+Check the file type to use the correct extension, although in the examples all are saved as .mp4.
+JavaScript code is available that can be run in any browser console to facilitate the process.
 
 ```js
 async function downloadFile() {
@@ -170,7 +193,8 @@ async function downloadFile() {
               'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-              url: 'https://rr4---sn-p5qlsn6l.googlevideo.com...'
+              urlVideo: 'https://rr4---sn-p5qlsn6l.googlevideo.com...',
+              urlAudio: 'https://rr4---sn-p5qlsn6l.googlevideo.com...'
           })
       });
 
@@ -245,7 +269,7 @@ npm i file-type@16.5.4
 const fs = require('fs');
 const FileType = require('file-type')
 
-const videoUrl = 'https://rr4---sn-p5qlsn6l.googlevideo.com...';
+const urlVideo = 'https://rr4---sn-p5qlsn6l.googlevideo.com...';
 const token = 'access_token';
 
 async function downloadFile() {
@@ -257,7 +281,7 @@ async function downloadFile() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        url: videoUrl
+        urlVideo,
       })
     });
 
