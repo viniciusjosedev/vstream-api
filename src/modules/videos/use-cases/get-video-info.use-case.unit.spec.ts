@@ -91,6 +91,10 @@ describe('GetVideoInfo', () => {
         },
       ] as any);
 
+    const fetchSpy = jest.spyOn(global, 'fetch').mockResolvedValue({
+      ok: true,
+    } as any);
+
     expect(
       await getVideoInfoUseCase.execute({
         fields: [
@@ -108,5 +112,8 @@ describe('GetVideoInfo', () => {
 
     expect(getFormatsSpy).toHaveBeenCalled();
     expect(getFormatsSpy).toHaveBeenCalledTimes(1);
+
+    expect(fetchSpy).toHaveBeenCalled();
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
   });
 });

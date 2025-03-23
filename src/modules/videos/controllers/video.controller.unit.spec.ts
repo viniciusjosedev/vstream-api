@@ -100,7 +100,12 @@ describe('VideoController', () => {
         .mockResolvedValue();
 
       expect(
-        await videoController.getVideo({ url: 'url' }, {} as Response),
+        await videoController.getVideo(
+          {
+            urlVideo: 'url',
+          },
+          {} as Response,
+        ),
       ).toBeUndefined();
 
       expect(getVideoUseCaseSpy).toHaveBeenCalled();

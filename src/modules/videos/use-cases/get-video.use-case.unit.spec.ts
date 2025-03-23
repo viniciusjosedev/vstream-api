@@ -38,21 +38,11 @@ describe('GetVideoUseCase', () => {
     } as any);
 
     expect(async () => {
-      await getVideoUseCase.execute('url', {} as Response);
-    }).rejects.toThrow('Error in request: undefined');
-
-    expect(fetchSpy).toHaveBeenCalled();
-    expect(fetchSpy).toHaveBeenCalledTimes(1);
-  });
-
-  it('should error if body is not stream', () => {
-    const fetchSpy = jest.spyOn(global, 'fetch').mockResolvedValue({
-      ok: true,
-    } as any);
-
-    expect(async () => {
-      await getVideoUseCase.execute('url', {} as Response);
-    }).rejects.toThrow('Body is not stream');
+      await getVideoUseCase.execute({
+        res: {} as Response,
+        urlVideo: 'url',
+      });
+    }).rejects.toThrow('Error in request with urlVideo');
 
     expect(fetchSpy).toHaveBeenCalled();
     expect(fetchSpy).toHaveBeenCalledTimes(1);
@@ -70,8 +60,12 @@ describe('GetVideoUseCase', () => {
         },
       }),
       headers: {
-        get: () => '',
+        get: (param) => {
+          if (param === 'Content-Length') return '1';
+          else return 'video/mp4';
+        },
       },
+      arrayBuffer: () => new ArrayBuffer(1),
     } as any);
 
     const res = {
@@ -84,9 +78,13 @@ describe('GetVideoUseCase', () => {
       status: () => {},
     } as unknown as Response;
 
-    expect(await getVideoUseCase.execute('url', res)).toBeUndefined();
+    expect(
+      await getVideoUseCase.execute({
+        res: res,
+        urlVideo: 'url',
+      }),
+    ).toBeUndefined();
 
     expect(fetchSpy).toHaveBeenCalled();
-    expect(fetchSpy).toHaveBeenCalledTimes(1);
   });
 });

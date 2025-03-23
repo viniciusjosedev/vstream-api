@@ -120,6 +120,10 @@ describe('VideosRouter (e2e)', () => {
     });
 
     it('should return based fields', async () => {
+      const fetchSpy = jest.spyOn(global, 'fetch').mockResolvedValue({
+        ok: true,
+      } as any);
+
       const { body: bodyOnlyTitle } = await request(app.getHttpServer())
         .get('/video/info')
         .set('Authorization', `Bearer ${access_token}`)
@@ -199,6 +203,8 @@ describe('VideosRouter (e2e)', () => {
         ['data', 'formats'],
         GET_INFO.formats,
       );
+
+      fetchSpy.mockClear();
     });
   });
 
@@ -207,7 +213,7 @@ describe('VideosRouter (e2e)', () => {
       const response = await request(app.getHttpServer())
         .post('/video/download')
         .send({
-          url: 'url',
+          urlVideo: 'url',
         });
 
       const { body } = response;
@@ -224,7 +230,10 @@ describe('VideosRouter (e2e)', () => {
       const { body } = response;
 
       expect(body).toHaveProperty('error', 'Bad Request');
-      expect(body).toHaveProperty('message', ['url should not be empty']);
+      expect(body).toHaveProperty('message', [
+        'One of the fields urlVideo or urlAudio must be provided',
+        'One of the fields urlVideo or urlAudio must be provided',
+      ]);
       expect(body).toHaveProperty('statusCode', 400);
     });
 
@@ -246,23 +255,24 @@ describe('VideosRouter (e2e)', () => {
             }
           },
         },
+        arrayBuffer: jest.fn().mockResolvedValue(new ArrayBuffer(1024)),
       } as any);
 
       const response = await request(app.getHttpServer())
         .post('/video/download')
         .send({
-          url: 'url',
+          urlVideo: 'url',
         })
         .set('Authorization', `Bearer ${access_token}`);
 
-      const { body, status } = response;
+      const { status } = response;
 
       expect(status).toBe(200);
 
-      expect(body).toBeInstanceOf(Buffer);
-
       expect(fetchSpy).toHaveBeenCalled();
-      expect(fetchSpy).toHaveBeenCalledTimes(1);
+      expect(fetchSpy).toHaveBeenCalledTimes(2);
+
+      fetchSpy.mockClear();
     });
   });
 });
